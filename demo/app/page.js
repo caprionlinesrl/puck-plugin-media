@@ -4,67 +4,30 @@ import { useState } from "react";
 import { Puck } from "@puckeditor/core";
 import "@puckeditor/core/puck.css";
 import { createMediaPlugin } from "@caprionlinesrl/puck-plugin-media";
+import { mockMediaConfig } from "@caprionlinesrl/puck-plugin-media/mocks";
 import { config } from "@/blocks";
 import { previewStorage } from "@/utils/previewStorage";
-import {
-  // Image API
-  fetchImageList,
-  uploadImages,
-  updateImage,
-  deleteImage,
-  // Gallery API
-  fetchGalleryList,
-  fetchGallery,
-  createGallery,
-  deleteGallery,
-  uploadToGallery,
-  removeFromGallery,
-  updateGalleryImage,
-  // Document API
-  fetchDocumentList,
-  uploadDocuments,
-  updateDocument,
-  deleteDocument,
-} from "@/utils/mockMedia";
 
 // Create media plugin with mock data and upload support
 const mediaPlugin = createMediaPlugin({
+  ...mockMediaConfig,
   // Languages for multilingual fields
   languages: [
     { code: 'en', label: 'English' },
     { code: 'it', label: 'Italiano' },
   ],
-
-  // Image configuration
+  // Image configuration with custom upload config
   image: {
-    fetchList: fetchImageList,
-    upload: uploadImages,
-    update: updateImage,
-    delete: deleteImage,
+    ...mockMediaConfig.image,
     uploadConfig: {
       accept: 'image/jpeg,image/png,image/gif,image/webp',
       maxSize: 10 * 1024 * 1024, // 10MB
       multiple: true,
     },
   },
-
-  // Gallery configuration
-  gallery: {
-    fetchList: fetchGalleryList,
-    fetch: fetchGallery,
-    create: createGallery,
-    delete: deleteGallery,
-    upload: uploadToGallery,
-    removeImage: removeFromGallery,
-    updateImage: updateGalleryImage,
-  },
-
-  // Document configuration
+  // Document configuration with custom upload config
   document: {
-    fetchList: fetchDocumentList,
-    upload: uploadDocuments,
-    update: updateDocument,
-    delete: deleteDocument,
+    ...mockMediaConfig.document,
     uploadConfig: {
       accept: '.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt',
       maxSize: 20 * 1024 * 1024, // 20MB

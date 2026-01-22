@@ -15,6 +15,11 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
+    "./mocks": {
+      "types": "./dist/mocks/index.d.ts",
+      "import": "./dist/mocks/index.mjs",
+      "require": "./dist/mocks/index.js"
+    },
     "./styles.css": "./dist/index.css"
   },
   "files": [

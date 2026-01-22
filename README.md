@@ -26,6 +26,34 @@ yarn add @caprionlinesrl/puck-plugin-media
 
 ### 1. Create the plugin
 
+#### Option A: Using mock data (for demos/prototyping)
+
+```tsx
+import { createMediaPlugin } from '@caprionlinesrl/puck-plugin-media';
+import { mockMediaConfig } from '@caprionlinesrl/puck-plugin-media/mocks';
+
+// One-liner with mock data
+const mediaPlugin = createMediaPlugin(mockMediaConfig);
+
+// Or with custom options
+const mediaPlugin = createMediaPlugin({
+  ...mockMediaConfig,
+  languages: [
+    { code: 'en', label: 'English' },
+    { code: 'it', label: 'Italiano' },
+  ],
+  image: {
+    ...mockMediaConfig.image,
+    uploadConfig: {
+      accept: 'image/jpeg,image/png,image/webp',
+      maxSize: 10 * 1024 * 1024, // 10MB
+    },
+  },
+});
+```
+
+#### Option B: With your own API
+
 ```tsx
 import { createMediaPlugin } from '@caprionlinesrl/puck-plugin-media';
 
@@ -149,6 +177,29 @@ const config = {
   },
 };
 ```
+
+## Mock Data
+
+The plugin includes mock data for quick prototyping and demos. Import from the `/mocks` subpath:
+
+```tsx
+import { mockMediaConfig } from '@caprionlinesrl/puck-plugin-media/mocks';
+```
+
+`mockMediaConfig` provides:
+- **12 sample images** from Unsplash with multilingual alt text
+- **3 sample galleries** (Landscapes, Team, Portfolio)
+- **4 sample documents** (PDF files)
+- Full CRUD operations (in-memory, resets on page reload)
+- Simulated upload with progress
+- Search and pagination support
+
+This is useful for:
+- Quick demos and prototypes
+- Testing your Puck configuration
+- Development without a backend
+
+> **Note:** Mock data is stored in memory and will reset on page reload.
 
 ## Configuration
 

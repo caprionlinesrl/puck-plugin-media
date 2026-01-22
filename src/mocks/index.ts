@@ -1,20 +1,42 @@
 /**
- * Mock media data for demo purposes
- * In production, this would come from your API
+ * Mock media data and API functions for demo/testing purposes
+ *
+ * Usage:
+ * ```typescript
+ * import { createMediaPlugin } from '@caprionlinesrl/puck-plugin-media';
+ * import { mockMediaConfig } from '@caprionlinesrl/puck-plugin-media/mocks';
+ *
+ * const mediaPlugin = createMediaPlugin({
+ *   ...mockMediaConfig,
+ *   languages: [
+ *     { code: 'en', label: 'English' },
+ *     { code: 'it', label: 'Italiano' },
+ *   ],
+ * });
+ * ```
  */
+
+import type {
+  ImageItem,
+  GalleryItem,
+  DocumentItem,
+  FetchListParams,
+  FetchListResult,
+  UploadCallbacks,
+  MediaPluginOptions,
+} from '../types';
 
 // =============================================================================
 // IMAGE DATA
 // =============================================================================
 
-const mockImageItems = [
+const mockImageItems: ImageItem[] = [
   {
     id: '1',
     url: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=800',
     thumbnailUrl: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=200',
     filename: 'coastal-sunset.jpg',
     alt: { en: 'Coastal sunset', it: 'Tramonto sulla costa' },
-    mimeType: 'image/jpeg',
     width: 1920,
     height: 1280,
     size: 245000,
@@ -25,7 +47,6 @@ const mockImageItems = [
     thumbnailUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200',
     filename: 'snowy-mountains.jpg',
     alt: { en: 'Snowy mountains', it: 'Montagne innevate' },
-    mimeType: 'image/jpeg',
     width: 1920,
     height: 1280,
     size: 312000,
@@ -36,7 +57,6 @@ const mockImageItems = [
     thumbnailUrl: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=200',
     filename: 'forest-trail.jpg',
     alt: { en: 'Forest trail', it: 'Sentiero nel bosco' },
-    mimeType: 'image/jpeg',
     width: 1920,
     height: 1280,
     size: 198000,
@@ -47,7 +67,6 @@ const mockImageItems = [
     thumbnailUrl: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=200',
     filename: 'mountain-lake.jpg',
     alt: { en: 'Mountain lake', it: 'Lago di montagna' },
-    mimeType: 'image/jpeg',
     width: 1920,
     height: 1280,
     size: 276000,
@@ -58,7 +77,6 @@ const mockImageItems = [
     thumbnailUrl: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=200',
     filename: 'misty-forest.jpg',
     alt: { en: 'Misty forest', it: 'Foresta nebbiosa' },
-    mimeType: 'image/jpeg',
     width: 1920,
     height: 1280,
     size: 223000,
@@ -69,7 +87,6 @@ const mockImageItems = [
     thumbnailUrl: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=200',
     filename: 'desert-sunset.jpg',
     alt: { en: 'Desert sunset', it: 'Tramonto nel deserto' },
-    mimeType: 'image/jpeg',
     width: 1920,
     height: 1280,
     size: 189000,
@@ -80,7 +97,6 @@ const mockImageItems = [
     thumbnailUrl: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=200',
     filename: 'majestic-mountain.jpg',
     alt: { en: 'Majestic mountain', it: 'Montagna maestosa' },
-    mimeType: 'image/jpeg',
     width: 1920,
     height: 1280,
     size: 334000,
@@ -91,7 +107,6 @@ const mockImageItems = [
     thumbnailUrl: 'https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=200',
     filename: 'ocean-sunset.jpg',
     alt: { en: 'Ocean sunset', it: 'Tramonto sul mare' },
-    mimeType: 'image/jpeg',
     width: 1920,
     height: 1280,
     size: 267000,
@@ -102,7 +117,6 @@ const mockImageItems = [
     thumbnailUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200',
     filename: 'portrait-man.jpg',
     alt: { en: 'Man portrait', it: 'Ritratto uomo' },
-    mimeType: 'image/jpeg',
     width: 1280,
     height: 1920,
     size: 156000,
@@ -113,7 +127,6 @@ const mockImageItems = [
     thumbnailUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200',
     filename: 'portrait-woman.jpg',
     alt: { en: 'Woman portrait', it: 'Ritratto donna' },
-    mimeType: 'image/jpeg',
     width: 1280,
     height: 1920,
     size: 178000,
@@ -124,7 +137,6 @@ const mockImageItems = [
     thumbnailUrl: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=200',
     filename: 'team-meeting.jpg',
     alt: { en: 'Team meeting', it: 'Riunione di team' },
-    mimeType: 'image/jpeg',
     width: 1920,
     height: 1280,
     size: 298000,
@@ -135,7 +147,6 @@ const mockImageItems = [
     thumbnailUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=200',
     filename: 'team-collaboration.jpg',
     alt: { en: 'Team collaboration', it: 'Collaborazione team' },
-    mimeType: 'image/jpeg',
     width: 1920,
     height: 1280,
     size: 312000,
@@ -143,13 +154,13 @@ const mockImageItems = [
 ];
 
 // Store for dynamically uploaded images (in-memory for demo)
-let uploadedImages = [];
+let uploadedImages: ImageItem[] = [];
 
 // =============================================================================
 // GALLERY DATA
 // =============================================================================
 
-let mockGalleries = [
+let mockGalleries: GalleryItem[] = [
   {
     id: 'gallery-1',
     name: 'Landscapes',
@@ -180,7 +191,7 @@ let mockGalleries = [
 // DOCUMENT DATA
 // =============================================================================
 
-let mockDocumentItems = [
+let mockDocumentItems: DocumentItem[] = [
   {
     id: 'doc-1',
     url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
@@ -224,7 +235,42 @@ let mockDocumentItems = [
 ];
 
 // Store for dynamically uploaded documents (in-memory for demo)
-let uploadedDocuments = [];
+let uploadedDocuments: DocumentItem[] = [];
+
+// =============================================================================
+// HELPER FUNCTIONS
+// =============================================================================
+
+/**
+ * Helper to get image dimensions
+ */
+function getImageDimensions(file: File): Promise<{ width?: number; height?: number }> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      resolve({ width: img.width, height: img.height });
+      URL.revokeObjectURL(img.src);
+    };
+    img.onerror = () => {
+      resolve({ width: undefined, height: undefined });
+    };
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+/**
+ * Generate a unique ID
+ */
+function generateId(prefix: string): string {
+  return `${prefix}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+}
+
+/**
+ * Simulate network delay
+ */
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 // =============================================================================
 // IMAGE API FUNCTIONS
@@ -233,18 +279,23 @@ let uploadedDocuments = [];
 /**
  * Fetch list of images
  */
-export async function fetchImageList({ query, page = 1, pageSize = 20 }) {
-  await new Promise(resolve => setTimeout(resolve, 300));
+async function fetchImageList({
+  query,
+  page = 1,
+  pageSize = 20,
+}: FetchListParams): Promise<FetchListResult<ImageItem>> {
+  await delay(300);
 
   const allItems = [...uploadedImages, ...mockImageItems];
 
   let filteredItems = allItems;
   if (query) {
     const lowerQuery = query.toLowerCase();
-    filteredItems = allItems.filter(item =>
-      item.filename.toLowerCase().includes(lowerQuery) ||
-      item.alt?.it?.toLowerCase().includes(lowerQuery) ||
-      item.alt?.en?.toLowerCase().includes(lowerQuery)
+    filteredItems = allItems.filter(
+      (item) =>
+        item.filename?.toLowerCase().includes(lowerQuery) ||
+        item.alt?.it?.toLowerCase().includes(lowerQuery) ||
+        item.alt?.en?.toLowerCase().includes(lowerQuery)
     );
   }
 
@@ -262,37 +313,38 @@ export async function fetchImageList({ query, page = 1, pageSize = 20 }) {
 /**
  * Upload images
  */
-export async function uploadImages(files, { onProgress }) {
+async function uploadImages(
+  files: File | File[],
+  { onProgress }: UploadCallbacks
+): Promise<ImageItem | ImageItem[]> {
   const fileArray = Array.isArray(files) ? files : [files];
-  const results = [];
+  const results: ImageItem[] = [];
 
   for (let i = 0; i < fileArray.length; i++) {
     const file = fileArray[i];
-    
+
     // Simulate upload progress
     const totalSteps = 10;
     for (let step = 1; step <= totalSteps; step++) {
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await delay(100);
       onProgress(Math.round(((i + step / totalSteps) / fileArray.length) * 100));
     }
 
-    const id = `uploaded-img-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    const url = URL.createObjectURL(file);
-    
-    let width, height;
+    let width: number | undefined;
+    let height: number | undefined;
     if (file.type.startsWith('image/')) {
       const dimensions = await getImageDimensions(file);
       width = dimensions.width;
       height = dimensions.height;
     }
 
-    const newItem = {
-      id,
+    const url = URL.createObjectURL(file);
+    const newItem: ImageItem = {
+      id: generateId('uploaded-img'),
       url,
       thumbnailUrl: url,
       filename: file.name,
       alt: {},
-      mimeType: file.type,
       width,
       height,
       size: file.size,
@@ -309,21 +361,24 @@ export async function uploadImages(files, { onProgress }) {
 /**
  * Update image metadata
  */
-export async function updateImage(id, data) {
-  await new Promise(resolve => setTimeout(resolve, 200));
+async function updateImage(
+  id: string,
+  data: { alt?: Record<string, string | undefined> }
+): Promise<ImageItem> {
+  await delay(200);
 
   // Find in uploaded images
-  let item = uploadedImages.find(img => img.id === id);
+  let item = uploadedImages.find((img) => img.id === id);
   if (item) {
     item = { ...item, ...data };
-    uploadedImages = uploadedImages.map(img => img.id === id ? item : img);
+    uploadedImages = uploadedImages.map((img) => (img.id === id ? item! : img));
     return item;
   }
 
   // Find in mock items (we can't actually update these, but simulate it)
-  item = mockImageItems.find(img => img.id === id);
-  if (item) {
-    return { ...item, ...data };
+  const mockItem = mockImageItems.find((img) => img.id === id);
+  if (mockItem) {
+    return { ...mockItem, ...data };
   }
 
   throw new Error('Image not found');
@@ -332,21 +387,19 @@ export async function updateImage(id, data) {
 /**
  * Delete an image
  */
-export async function deleteImage(id) {
-  await new Promise(resolve => setTimeout(resolve, 200));
+async function deleteImage(id: string): Promise<void> {
+  await delay(200);
 
   // Check if it's an uploaded image
-  const uploadedIndex = uploadedImages.findIndex(img => img.id === id);
+  const uploadedIndex = uploadedImages.findIndex((img) => img.id === id);
   if (uploadedIndex !== -1) {
-    uploadedImages = uploadedImages.filter(img => img.id !== id);
+    uploadedImages = uploadedImages.filter((img) => img.id !== id);
     return;
   }
 
   // Check if it's a mock image (for demo, we'll just pretend it's deleted)
-  const mockIndex = mockImageItems.findIndex(img => img.id === id);
+  const mockIndex = mockImageItems.findIndex((img) => img.id === id);
   if (mockIndex !== -1) {
-    // In a real app, this would delete from the server
-    // For demo, we'll remove it from the array
     mockImageItems.splice(mockIndex, 1);
     return;
   }
@@ -361,13 +414,17 @@ export async function deleteImage(id) {
 /**
  * Fetch list of galleries
  */
-export async function fetchGalleryList({ query, page = 1, pageSize = 20 }) {
-  await new Promise(resolve => setTimeout(resolve, 300));
+async function fetchGalleryList({
+  query,
+  page = 1,
+  pageSize = 20,
+}: FetchListParams): Promise<FetchListResult<GalleryItem>> {
+  await delay(300);
 
   let filteredItems = [...mockGalleries];
   if (query) {
     const lowerQuery = query.toLowerCase();
-    filteredItems = mockGalleries.filter(gallery =>
+    filteredItems = mockGalleries.filter((gallery) =>
       gallery.name.toLowerCase().includes(lowerQuery)
     );
   }
@@ -386,10 +443,10 @@ export async function fetchGalleryList({ query, page = 1, pageSize = 20 }) {
 /**
  * Fetch a single gallery by ID
  */
-export async function fetchGallery(id) {
-  await new Promise(resolve => setTimeout(resolve, 200));
-  
-  const gallery = mockGalleries.find(g => g.id === id);
+async function fetchGallery(id: string): Promise<GalleryItem> {
+  await delay(200);
+
+  const gallery = mockGalleries.find((g) => g.id === id);
   if (!gallery) {
     throw new Error('Gallery not found');
   }
@@ -399,13 +456,13 @@ export async function fetchGallery(id) {
 /**
  * Create a new gallery
  */
-export async function createGallery(name) {
-  await new Promise(resolve => setTimeout(resolve, 300));
+async function createGallery(name: string): Promise<GalleryItem> {
+  await delay(300);
 
-  const newGallery = {
-    id: `gallery-${Date.now()}`,
+  const newGallery: GalleryItem = {
+    id: generateId('gallery'),
     name,
-    coverImage: null,
+    coverImage: undefined,
     images: [],
     imageCount: 0,
     createdAt: new Date().toISOString(),
@@ -418,44 +475,46 @@ export async function createGallery(name) {
 /**
  * Delete a gallery
  */
-export async function deleteGallery(id) {
-  await new Promise(resolve => setTimeout(resolve, 200));
-  mockGalleries = mockGalleries.filter(g => g.id !== id);
+async function deleteGallery(id: string): Promise<void> {
+  await delay(200);
+  mockGalleries = mockGalleries.filter((g) => g.id !== id);
 }
 
 /**
  * Upload images to a gallery
  */
-export async function uploadToGallery(galleryId, files, { onProgress }) {
+async function uploadToGallery(
+  galleryId: string,
+  files: File | File[],
+  { onProgress }: UploadCallbacks
+): Promise<ImageItem | ImageItem[]> {
   const fileArray = Array.isArray(files) ? files : [files];
-  const results = [];
+  const results: ImageItem[] = [];
 
   for (let i = 0; i < fileArray.length; i++) {
     const file = fileArray[i];
-    
+
     const totalSteps = 10;
     for (let step = 1; step <= totalSteps; step++) {
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await delay(100);
       onProgress(Math.round(((i + step / totalSteps) / fileArray.length) * 100));
     }
 
-    const id = `gallery-img-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    const url = URL.createObjectURL(file);
-    
-    let width, height;
+    let width: number | undefined;
+    let height: number | undefined;
     if (file.type.startsWith('image/')) {
       const dimensions = await getImageDimensions(file);
       width = dimensions.width;
       height = dimensions.height;
     }
 
-    const newItem = {
-      id,
+    const url = URL.createObjectURL(file);
+    const newItem: ImageItem = {
+      id: generateId('gallery-img'),
       url,
       thumbnailUrl: url,
       filename: file.name,
       alt: {},
-      mimeType: file.type,
       width,
       height,
       size: file.size,
@@ -465,7 +524,7 @@ export async function uploadToGallery(galleryId, files, { onProgress }) {
   }
 
   // Add images to gallery
-  mockGalleries = mockGalleries.map(gallery => {
+  mockGalleries = mockGalleries.map((gallery) => {
     if (gallery.id === galleryId) {
       const newImages = [...results, ...gallery.images];
       return {
@@ -484,17 +543,18 @@ export async function uploadToGallery(galleryId, files, { onProgress }) {
 /**
  * Remove an image from a gallery
  */
-export async function removeFromGallery(galleryId, imageId) {
-  await new Promise(resolve => setTimeout(resolve, 200));
+async function removeFromGallery(galleryId: string, imageId: string): Promise<void> {
+  await delay(200);
 
-  mockGalleries = mockGalleries.map(gallery => {
+  mockGalleries = mockGalleries.map((gallery) => {
     if (gallery.id === galleryId) {
-      const newImages = gallery.images.filter(img => img.id !== imageId);
+      const newImages = gallery.images.filter((img) => img.id !== imageId);
       return {
         ...gallery,
         images: newImages,
         imageCount: newImages.length,
-        coverImage: gallery.coverImage?.id === imageId ? newImages[0] || null : gallery.coverImage,
+        coverImage:
+          gallery.coverImage?.id === imageId ? newImages[0] || undefined : gallery.coverImage,
       };
     }
     return gallery;
@@ -504,16 +564,20 @@ export async function removeFromGallery(galleryId, imageId) {
 /**
  * Update image metadata in a gallery
  */
-export async function updateGalleryImage(galleryId, imageId, data) {
-  await new Promise(resolve => setTimeout(resolve, 200));
+async function updateGalleryImage(
+  galleryId: string,
+  imageId: string,
+  data: { alt?: Record<string, string | undefined> }
+): Promise<ImageItem> {
+  await delay(200);
 
-  let updatedImage = null;
-  
-  mockGalleries = mockGalleries.map(gallery => {
+  let updatedImage: ImageItem | null = null;
+
+  mockGalleries = mockGalleries.map((gallery) => {
     if (gallery.id === galleryId) {
       return {
         ...gallery,
-        images: gallery.images.map(img => {
+        images: gallery.images.map((img) => {
           if (img.id === imageId) {
             updatedImage = { ...img, ...data };
             return updatedImage;
@@ -539,18 +603,23 @@ export async function updateGalleryImage(galleryId, imageId, data) {
 /**
  * Fetch list of documents
  */
-export async function fetchDocumentList({ query, page = 1, pageSize = 20 }) {
-  await new Promise(resolve => setTimeout(resolve, 300));
+async function fetchDocumentList({
+  query,
+  page = 1,
+  pageSize = 20,
+}: FetchListParams): Promise<FetchListResult<DocumentItem>> {
+  await delay(300);
 
   const allItems = [...uploadedDocuments, ...mockDocumentItems];
 
   let filteredItems = allItems;
   if (query) {
     const lowerQuery = query.toLowerCase();
-    filteredItems = allItems.filter(item =>
-      item.filename.toLowerCase().includes(lowerQuery) ||
-      item.title?.it?.toLowerCase().includes(lowerQuery) ||
-      item.title?.en?.toLowerCase().includes(lowerQuery)
+    filteredItems = allItems.filter(
+      (item) =>
+        item.filename.toLowerCase().includes(lowerQuery) ||
+        item.title?.it?.toLowerCase().includes(lowerQuery) ||
+        item.title?.en?.toLowerCase().includes(lowerQuery)
     );
   }
 
@@ -568,25 +637,27 @@ export async function fetchDocumentList({ query, page = 1, pageSize = 20 }) {
 /**
  * Upload documents
  */
-export async function uploadDocuments(files, { onProgress }) {
+async function uploadDocuments(
+  files: File | File[],
+  { onProgress }: UploadCallbacks
+): Promise<DocumentItem | DocumentItem[]> {
   const fileArray = Array.isArray(files) ? files : [files];
-  const results = [];
+  const results: DocumentItem[] = [];
 
   for (let i = 0; i < fileArray.length; i++) {
     const file = fileArray[i];
-    
+
     const totalSteps = 10;
     for (let step = 1; step <= totalSteps; step++) {
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await delay(100);
       onProgress(Math.round(((i + step / totalSteps) / fileArray.length) * 100));
     }
 
-    const id = `uploaded-doc-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     const url = URL.createObjectURL(file);
     const extension = file.name.split('.').pop() || '';
 
-    const newItem = {
-      id,
+    const newItem: DocumentItem = {
+      id: generateId('uploaded-doc'),
       url,
       filename: file.name,
       title: {},
@@ -606,19 +677,22 @@ export async function uploadDocuments(files, { onProgress }) {
 /**
  * Update document metadata
  */
-export async function updateDocument(id, data) {
-  await new Promise(resolve => setTimeout(resolve, 200));
+async function updateDocument(
+  id: string,
+  data: { title?: Record<string, string | undefined> }
+): Promise<DocumentItem> {
+  await delay(200);
 
-  let item = uploadedDocuments.find(doc => doc.id === id);
+  let item = uploadedDocuments.find((doc) => doc.id === id);
   if (item) {
     item = { ...item, ...data };
-    uploadedDocuments = uploadedDocuments.map(doc => doc.id === id ? item : doc);
+    uploadedDocuments = uploadedDocuments.map((doc) => (doc.id === id ? item! : doc));
     return item;
   }
 
-  item = mockDocumentItems.find(doc => doc.id === id);
-  if (item) {
-    return { ...item, ...data };
+  const mockItem = mockDocumentItems.find((doc) => doc.id === id);
+  if (mockItem) {
+    return { ...mockItem, ...data };
   }
 
   throw new Error('Document not found');
@@ -627,16 +701,16 @@ export async function updateDocument(id, data) {
 /**
  * Delete a document
  */
-export async function deleteDocument(id) {
-  await new Promise(resolve => setTimeout(resolve, 200));
+async function deleteDocument(id: string): Promise<void> {
+  await delay(200);
 
-  const uploadedIndex = uploadedDocuments.findIndex(doc => doc.id === id);
+  const uploadedIndex = uploadedDocuments.findIndex((doc) => doc.id === id);
   if (uploadedIndex !== -1) {
-    uploadedDocuments = uploadedDocuments.filter(doc => doc.id !== id);
+    uploadedDocuments = uploadedDocuments.filter((doc) => doc.id !== id);
     return;
   }
 
-  const mockIndex = mockDocumentItems.findIndex(doc => doc.id === id);
+  const mockIndex = mockDocumentItems.findIndex((doc) => doc.id === id);
   if (mockIndex !== -1) {
     mockDocumentItems.splice(mockIndex, 1);
     return;
@@ -646,22 +720,46 @@ export async function deleteDocument(id) {
 }
 
 // =============================================================================
-// HELPER FUNCTIONS
+// MOCK MEDIA CONFIG
 // =============================================================================
 
 /**
- * Helper to get image dimensions
+ * Pre-configured mock media options for quick setup.
+ *
+ * Usage:
+ * ```typescript
+ * import { createMediaPlugin } from '@caprionlinesrl/puck-plugin-media';
+ * import { mockMediaConfig } from '@caprionlinesrl/puck-plugin-media/mocks';
+ *
+ * const mediaPlugin = createMediaPlugin({
+ *   ...mockMediaConfig,
+ *   languages: [
+ *     { code: 'en', label: 'English' },
+ *     { code: 'it', label: 'Italiano' },
+ *   ],
+ * });
+ * ```
  */
-function getImageDimensions(file) {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => {
-      resolve({ width: img.width, height: img.height });
-      URL.revokeObjectURL(img.src);
-    };
-    img.onerror = () => {
-      resolve({ width: undefined, height: undefined });
-    };
-    img.src = URL.createObjectURL(file);
-  });
-}
+export const mockMediaConfig: Pick<MediaPluginOptions, 'image' | 'gallery' | 'document'> = {
+  image: {
+    fetchList: fetchImageList,
+    upload: uploadImages,
+    update: updateImage,
+    delete: deleteImage,
+  },
+  gallery: {
+    fetchList: fetchGalleryList,
+    fetch: fetchGallery,
+    create: createGallery,
+    delete: deleteGallery,
+    upload: uploadToGallery,
+    removeImage: removeFromGallery,
+    updateImage: updateGalleryImage,
+  },
+  document: {
+    fetchList: fetchDocumentList,
+    upload: uploadDocuments,
+    update: updateDocument,
+    delete: deleteDocument,
+  },
+};

@@ -1,0 +1,22 @@
+# Source files (dist is published)
+src/
+
+# Config files
+tsconfig.json
+tsup.config.ts
+.gitignore
+
+# CI/CD
+.github/
+
+# Yarn
+.yarn/
+.pnp.*
+yarn.lock
+
+# IDE
+.idea/
+.vscode/
+
+# Source maps (optional - remove these lines if you want source maps in npm)
+# *.map

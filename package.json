@@ -1,0 +1,64 @@
+{
+  "name": "@caprionlinesrl/puck-plugin-media",
+  "version": "0.1.0",
+  "packageManager": "yarn@4.12.0",
+  "description": "Puck plugin for media library integration with grid-based image picker",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./styles.css": "./dist/index.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "peerDependencies": {
+    "@puckeditor/core": ">=0.21.0",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "dependencies": {
+    "lucide-react": "^0.468.0"
+  },
+  "devDependencies": {
+    "@puckeditor/core": "^0.21.0",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "puck",
+    "plugin",
+    "media",
+    "image",
+    "gallery",
+    "cms",
+    "editor"
+  ],
+  "author": "Capri Online srl",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/caprionlinesrl/puck-plugin-media.git"
+  },
+  "bugs": {
+    "url": "https://github.com/caprionlinesrl/puck-plugin-media/issues"
+  },
+  "homepage": "https://github.com/caprionlinesrl/puck-plugin-media#readme"
+}

@@ -1,0 +1,183 @@
+.container {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background: white;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #171717;
+}
+
+.clearButton {
+  padding: 4px 8px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #3b82f6;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.clearButton:hover {
+  background: #eff6ff;
+}
+
+.list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.preview {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #f5f5f5;
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.previewPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #e5e5e5 0%, #f5f5f5 100%);
+}
+
+.progressOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  transition: height 0.2s ease;
+}
+
+.progressText {
+  position: relative;
+  z-index: 1;
+  font-size: 10px;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.filename {
+  font-size: 13px;
+  color: #171717;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.size {
+  font-size: 11px;
+  color: #737373;
+}
+
+.error {
+  font-size: 11px;
+  color: #dc2626;
+}
+
+.actions {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.cancelButton {
+  padding: 4px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #737373;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.cancelButton:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.spinner {
+  color: #3b82f6;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.successIcon {
+  color: #16a34a;
+}
+
+.errorIcon {
+  color: #dc2626;
+}
+
+/* Status-based item styles */
+.item.completed {
+  background: #f0fdf4;
+}
+
+.item.error {
+  background: #fef2f2;
+}

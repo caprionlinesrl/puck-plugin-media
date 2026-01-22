@@ -1,0 +1,440 @@
+/* Header Buttons */
+.backButton {
+  padding: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #737373;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+
+.backButton:hover {
+  background: #f5f5f5;
+  color: #171717;
+}
+
+.selectModeButton {
+  padding: 8px 16px;
+  background: #f5f5f5;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #525252;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.selectModeButton:hover {
+  background: #ebebeb;
+  border-color: #d4d4d4;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  gap: 12px;
+}
+
+/* Upload Section */
+.uploadSection {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Document List */
+.documentList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.documentItemContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.documentItem {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.documentItem:hover {
+  border-color: #3b82f6;
+  background: #f9fafb;
+}
+
+.documentItem.selected {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d4d4d4;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.checkboxChecked {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+.documentIcon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  border-radius: 6px;
+}
+
+.pdfIcon {
+  color: #dc2626;
+}
+
+.fileIcon {
+  color: #737373;
+}
+
+.documentInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.documentName {
+  font-size: 14px;
+  font-weight: 500;
+  color: #171717;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.documentMeta {
+  font-size: 12px;
+  color: #737373;
+}
+
+.checkmark {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  background: #3b82f6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.editButton {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 8px;
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #737373;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s, background 0.15s, color 0.15s;
+}
+
+.documentItemContainer:hover .editButton {
+  opacity: 1;
+}
+
+.editButton:hover {
+  background: #f5f5f5;
+  color: #171717;
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+}
+
+.footerInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+.footerIcon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #e5e5e5;
+  flex-shrink: 0;
+}
+
+.footerFilename {
+  font-size: 13px;
+  font-weight: 500;
+  color: #171717;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.footerMeta {
+  font-size: 12px;
+  color: #737373;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.selectButton {
+  padding: 10px 20px;
+  background: #3b82f6;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.selectButton:hover {
+  background: #2563eb;
+}
+
+/* Edit View */
+.editContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.editPreview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 40px;
+}
+
+.editIcon {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.editIcon svg {
+  width: 40px;
+  height: 40px;
+}
+
+.editInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.editInfoRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.editInfoLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: #737373;
+  min-width: 80px;
+}
+
+.editInfoValue {
+  font-size: 13px;
+  color: #171717;
+}
+
+.editField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.editFieldHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.editFieldLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #171717;
+  margin: 0;
+}
+
+.langTabs {
+  display: flex;
+  gap: 2px;
+  background: #e5e5e5;
+  border-radius: 6px;
+  padding: 3px;
+}
+
+.langTab {
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #737373;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.langTab:hover {
+  color: #525252;
+}
+
+.langTabActive {
+  background: white;
+  color: #171717;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.editInput {
+  padding: 12px 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 14px;
+  background: white;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.editInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.editInput::placeholder {
+  color: #a3a3a3;
+}
+
+.editFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.saveButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #10b981;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.saveButton:hover:not(:disabled) {
+  background: #059669;
+}
+
+.saveButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+  .footer {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footerInfo {
+    width: 100%;
+  }
+
+  .selectButton {
+    width: 100%;
+  }
+
+  .editInfoRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .editInfoLabel {
+    min-width: auto;
+  }
+}

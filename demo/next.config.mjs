@@ -9,7 +9,7 @@ const nextConfig = {
   transpilePackages: ["@caprionlinesrl/puck-plugin-media"],
 
   webpack: (config) => {
-    config.resolve.alias["@"] = path.resolve(__dirname, "app");
+    config.resolve.alias["@"] = path.resolve(__dirname);
     config.resolve.alias["@caprionlinesrl/puck-plugin-media"] = path.resolve(__dirname, "../src");
     return config;
   },

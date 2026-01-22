@@ -82,8 +82,8 @@ import type {
 export function createMediaPlugin(options: MediaPluginOptions): PuckPlugin {
   const {
     languages = [
-      { code: 'it', label: 'Italiano' },
       { code: 'en', label: 'English' },
+      { code: 'it', label: 'Italiano' },
     ],
     image,
     gallery,

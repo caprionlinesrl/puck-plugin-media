@@ -16,12 +16,12 @@ export interface Language {
  * Default languages when not specified
  */
 export const DEFAULT_LANGUAGES: Language[] = [
-  { code: 'it', label: 'Italiano' },
   { code: 'en', label: 'English' },
+  { code: 'it', label: 'Italiano' },
 ];
 
 /**
- * Localized string value (e.g., { it: 'Ciao', en: 'Hello' })
+ * Localized string value (e.g., { en: 'Hello', it: 'Ciao' })
  */
 export type LocalizedString = Record<string, string | undefined>;
 

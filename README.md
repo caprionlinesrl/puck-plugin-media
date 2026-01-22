@@ -31,8 +31,8 @@ import { createMediaPlugin } from '@caprionlinesrl/puck-plugin-media';
 
 const mediaPlugin = createMediaPlugin({
   languages: [
-    { code: 'it', label: 'Italiano' },
     { code: 'en', label: 'English' },
+    { code: 'it', label: 'Italiano' },
   ],
 
   image: {
@@ -162,8 +162,8 @@ interface Language {
 
 // Default languages if not specified
 const DEFAULT_LANGUAGES = [
-  { code: 'it', label: 'Italiano' },
   { code: 'en', label: 'English' },
+  { code: 'it', label: 'Italiano' },
 ];
 ```
 
@@ -306,8 +306,8 @@ interface LocalizedString {
 
 // Example
 const alt: LocalizedString = {
-  it: 'Tramonto sulla costa',
   en: 'Coastal sunset',
+  it: 'Tramonto sulla costa',
 };
 ```
 
@@ -381,6 +381,41 @@ import '@caprionlinesrl/puck-plugin-media/styles.css';
 - Chrome, Firefox, Safari, Edge (latest versions)
 - React 18+
 - Puck 0.21+
+
+## Development
+
+### Prerequisites
+
+- Node.js 18+
+- Yarn 4+
+
+### Setup
+
+```bash
+git clone https://github.com/caprionlinesrl/puck-plugin-media.git
+cd puck-plugin-media
+yarn install
+```
+
+### Run the demo
+
+```bash
+yarn demo
+```
+
+Open [http://localhost:3000](http://localhost:3000)
+
+### Build the library
+
+```bash
+yarn build
+```
+
+### Type check
+
+```bash
+yarn typecheck
+```
 
 ## License
 

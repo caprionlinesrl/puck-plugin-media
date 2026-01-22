@@ -44,7 +44,8 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
-    "demo": "yarn workspace demo dev"
+    "demo": "yarn workspace demo dev",
+    "prepublishOnly": "yarn typecheck && yarn build"
   },
   "keywords": [
     "puck",
@@ -55,7 +56,7 @@
     "cms",
     "editor"
   ],
-  "author": "Capri Online srl",
+  "author": "Capri On Line S.r.l.",
   "license": "MIT",
   "repository": {
     "type": "git",

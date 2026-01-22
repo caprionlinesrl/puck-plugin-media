@@ -1,6 +1,9 @@
 # Source files (dist is published)
 src/
 
+# Demo app
+demo/
+
 # Config files
 tsconfig.json
 tsup.config.ts

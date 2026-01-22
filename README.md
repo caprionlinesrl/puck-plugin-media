@@ -260,7 +260,7 @@ interface ImageItem {
   id: string;
   url: string;
   filename?: string;
-  alt?: LocalizedString;      // { it: 'Testo alt', en: 'Alt text' }
+  alt?: LocalizedString;      // { en: 'Alt text', it: 'Testo alt' }
   width?: number;
   height?: number;
   size?: number;              // File size in bytes
@@ -289,7 +289,7 @@ interface DocumentItem {
   id: string;
   url: string;
   filename: string;
-  title?: LocalizedString;    // { it: 'Titolo', en: 'Title' }
+  title?: LocalizedString;    // { en: 'Title', it: 'Titolo' }
   mimeType: string;           // e.g., 'application/pdf'
   size: number;               // File size in bytes
   extension: string;          // e.g., 'pdf', 'docx'

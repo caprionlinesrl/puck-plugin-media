@@ -42,8 +42,8 @@ const mediaPlugin = createMediaPlugin({
     { code: 'en', label: 'English' },
     { code: 'it', label: 'Italiano' },
   ],
-  image: {
-    ...mockMediaConfig.image,
+  mediaImage: {
+    ...mockMediaConfig.mediaImage,
     uploadConfig: {
       accept: 'image/jpeg,image/png,image/webp',
       maxSize: 10 * 1024 * 1024, // 10MB
@@ -63,7 +63,7 @@ const mediaPlugin = createMediaPlugin({
     { code: 'it', label: 'Italiano' },
   ],
 
-  image: {
+  mediaImage: {
     fetchList: async ({ query, page, pageSize }) => {
       const res = await fetch(`/api/images?q=${query || ''}&page=${page}&limit=${pageSize}`);
       const data = await res.json();
@@ -89,7 +89,7 @@ const mediaPlugin = createMediaPlugin({
   },
 
   // Optional: Gallery support
-  gallery: {
+  mediaGallery: {
     fetchList: async (params) => { /* ... */ },
     fetch: async (id) => { /* ... */ },
     create: async (name) => { /* ... */ },
@@ -100,7 +100,7 @@ const mediaPlugin = createMediaPlugin({
   },
 
   // Optional: Document support
-  document: {
+  mediaDocument: {
     fetchList: async (params) => { /* ... */ },
     upload: async (file, callbacks) => { /* ... */ },
     update: async (id, data) => { /* ... */ },
@@ -130,7 +130,7 @@ const config = {
     Hero: {
       fields: {
         backgroundImage: {
-          type: 'image',
+          type: 'mediaImage',
           label: 'Background Image',
         },
         title: {
@@ -148,7 +148,7 @@ const config = {
     PhotoGallery: {
       fields: {
         gallery: {
-          type: 'gallery',
+          type: 'mediaGallery',
           label: 'Photo Gallery',
         },
       },
@@ -164,7 +164,7 @@ const config = {
     Download: {
       fields: {
         document: {
-          type: 'document',
+          type: 'mediaDocument',
           label: 'Download File',
         },
       },
@@ -218,18 +218,18 @@ const DEFAULT_LANGUAGES = [
 ];
 ```
 
-### Image Options
+### MediaImageOptions
 
 ```typescript
-interface ImageOptions {
+interface MediaImageOptions {
   // Required: Fetch paginated list of images
-  fetchList: (params: FetchListParams) => Promise<ImageItem[] | FetchListResult<ImageItem>>;
+  fetchList: (params: FetchListParams) => Promise<MediaImageItem[] | FetchListResult<MediaImageItem>>;
   
   // Optional: Upload new images
-  upload?: (file: File, callbacks: UploadCallbacks) => Promise<ImageItem | ImageItem[]>;
+  upload?: (file: File, callbacks: UploadCallbacks) => Promise<MediaImageItem | MediaImageItem[]>;
   
   // Optional: Update image metadata (alt text)
-  update?: (id: string, data: { alt?: LocalizedString }) => Promise<ImageItem>;
+  update?: (id: string, data: { alt?: LocalizedString }) => Promise<MediaImageItem>;
   
   // Optional: Delete an image (enables Manage mode)
   delete?: (id: string) => Promise<void>;
@@ -239,45 +239,45 @@ interface ImageOptions {
 }
 ```
 
-### Gallery Options
+### MediaGalleryOptions
 
 ```typescript
-interface GalleryOptions {
+interface MediaGalleryOptions {
   // Required: Fetch paginated list of galleries
-  fetchList: (params: FetchListParams) => Promise<GalleryItem[] | FetchListResult<GalleryItem>>;
+  fetchList: (params: FetchListParams) => Promise<MediaGalleryItem[] | FetchListResult<MediaGalleryItem>>;
   
   // Required: Fetch single gallery with all images
-  fetch: (id: string) => Promise<GalleryItem>;
+  fetch: (id: string) => Promise<MediaGalleryItem>;
   
   // Required: Create a new gallery
-  create: (name: string) => Promise<GalleryItem>;
+  create: (name: string) => Promise<MediaGalleryItem>;
   
   // Optional: Delete a gallery (enables Manage mode)
   delete?: (id: string) => Promise<void>;
   
   // Required: Upload images to a gallery
-  upload: (galleryId: string, file: File, callbacks: UploadCallbacks) => Promise<ImageItem | ImageItem[]>;
+  upload: (galleryId: string, file: File, callbacks: UploadCallbacks) => Promise<MediaImageItem | MediaImageItem[]>;
   
   // Optional: Remove an image from a gallery (enables image Manage mode)
   removeImage?: (galleryId: string, imageId: string) => Promise<void>;
   
   // Optional: Update image metadata within a gallery
-  updateImage?: (galleryId: string, imageId: string, data: { alt?: LocalizedString }) => Promise<ImageItem>;
+  updateImage?: (galleryId: string, imageId: string, data: { alt?: LocalizedString }) => Promise<MediaImageItem>;
 }
 ```
 
-### Document Options
+### MediaDocumentOptions
 
 ```typescript
-interface DocumentOptions {
+interface MediaDocumentOptions {
   // Required: Fetch paginated list of documents
-  fetchList: (params: FetchListParams) => Promise<DocumentItem[] | FetchListResult<DocumentItem>>;
+  fetchList: (params: FetchListParams) => Promise<MediaDocumentItem[] | FetchListResult<MediaDocumentItem>>;
   
   // Optional: Upload new documents
-  upload?: (file: File, callbacks: UploadCallbacks) => Promise<DocumentItem | DocumentItem[]>;
+  upload?: (file: File, callbacks: UploadCallbacks) => Promise<MediaDocumentItem | MediaDocumentItem[]>;
   
   // Optional: Update document metadata (title)
-  update?: (id: string, data: { title?: LocalizedString }) => Promise<DocumentItem>;
+  update?: (id: string, data: { title?: LocalizedString }) => Promise<MediaDocumentItem>;
   
   // Optional: Delete a document (enables Manage mode)
   delete?: (id: string) => Promise<void>;
@@ -304,10 +304,10 @@ interface UploadConfig {
 
 ## Types
 
-### ImageItem
+### MediaImageItem
 
 ```typescript
-interface ImageItem {
+interface MediaImageItem {
   id: string;
   url: string;
   filename?: string;
@@ -320,23 +320,23 @@ interface ImageItem {
 }
 ```
 
-### GalleryItem
+### MediaGalleryItem
 
 ```typescript
-interface GalleryItem {
+interface MediaGalleryItem {
   id: string;
   name: string;
-  coverImage?: ImageItem;
-  images: ImageItem[];
+  coverImage?: MediaImageItem;
+  images: MediaImageItem[];
   imageCount?: number;
   createdAt?: string;
 }
 ```
 
-### DocumentItem
+### MediaDocumentItem
 
 ```typescript
-interface DocumentItem {
+interface MediaDocumentItem {
   id: string;
   url: string;
   filename: string;
@@ -397,14 +397,14 @@ For advanced customization, you can import individual components:
 ```typescript
 import {
   // Fields (for custom block configurations)
-  ImageField,
-  GalleryField,
-  DocumentField,
+  MediaImageField,
+  MediaGalleryField,
+  MediaDocumentField,
   
   // Modals (for custom implementations)
-  ImagePickerModal,
-  GalleryPickerModal,
-  DocumentPickerModal,
+  MediaImagePickerModal,
+  MediaGalleryPickerModal,
+  MediaDocumentPickerModal,
   
   // Media Panel (shown in Puck sidebar)
   MediaPanel,

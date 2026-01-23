@@ -390,35 +390,6 @@ interface UploadCallbacks {
 }
 ```
 
-## Components
-
-For advanced customization, you can import individual components:
-
-```typescript
-import {
-  // Fields (for custom block configurations)
-  MediaImageField,
-  MediaGalleryField,
-  MediaDocumentField,
-  
-  // Modals (for custom implementations)
-  MediaImagePickerModal,
-  MediaGalleryPickerModal,
-  MediaDocumentPickerModal,
-  
-  // Media Panel (shown in Puck sidebar)
-  MediaPanel,
-  
-  // Upload components
-  UploadDropzone,
-  UploadQueue,
-  
-  // Hook
-  useUpload,
-  formatFileSize,
-} from '@caprionlinesrl/puck-plugin-media';
-```
-
 ## Styling
 
 The plugin uses CSS Modules with vanilla CSS that matches Puck's design language. Import the styles in your app:

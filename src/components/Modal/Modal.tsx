@@ -93,10 +93,11 @@ export function Modal({
               <Loader2 size={32} className={styles.spinner} />
               <span>Loading...</span>
             </div>
-          ) : empty ? (
-            <div className={styles.empty}>{emptyMessage}</div>
           ) : (
-            children
+            <>
+              {children}
+              {empty && <div className={styles.empty}>{emptyMessage}</div>}
+            </>
           )}
         </div>
 

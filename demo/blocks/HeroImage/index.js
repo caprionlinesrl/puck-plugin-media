@@ -4,7 +4,7 @@ export const HeroImageBlock = {
   label: 'Hero Image',
   fields: {
     backgroundImage: {
-      type: 'image',
+      type: 'mediaImage',
       label: 'Background Image',
     },
     title: {

@@ -8,7 +8,7 @@ import { SelectionToolbar } from '../SelectionToolbar';
 import { UploadDropzone } from '../UploadDropzone/UploadDropzone';
 import { UploadQueue } from '../UploadQueue/UploadQueue';
 import { useUpload, formatFileSize } from '../../hooks/useUpload';
-import type { DocumentPickerModalProps, DocumentItem, LocalizedString } from '../../types';
+import type { MediaDocumentPickerModalProps, MediaDocumentItem, LocalizedString } from '../../types';
 import styles from './DocumentPickerModal.module.css';
 
 type ViewMode = 'picker' | 'edit';
@@ -21,7 +21,7 @@ const DEFAULT_UPLOAD_CONFIG = {
 
 const PAGE_SIZE = 20;
 
-export function DocumentPickerModal({
+export function MediaDocumentPickerModal({
   languages,
   documentOptions,
   title = 'Select Document',
@@ -29,19 +29,19 @@ export function DocumentPickerModal({
   onSelect,
   onClose,
   selectable = true,
-}: DocumentPickerModalProps) {
+}: MediaDocumentPickerModalProps) {
   const { fetchList, upload, update, delete: deleteDocument, uploadConfig } = documentOptions;
 
   const [view, setView] = useState<ViewMode>('picker');
-  const [editingItem, setEditingItem] = useState<DocumentItem | null>(null);
+  const [editingItem, setEditingItem] = useState<MediaDocumentItem | null>(null);
   const [selectMode, setSelectMode] = useState(false);
   const [selectedForDelete, setSelectedForDelete] = useState<Set<string>>(new Set());
-  const [items, setItems] = useState<DocumentItem[]>([]);
+  const [items, setItems] = useState<MediaDocumentItem[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<DocumentItem | null>(null);
+  const [selectedItem, setSelectedItem] = useState<MediaDocumentItem | null>(null);
   const [titleValues, setTitleValues] = useState<LocalizedString>({});
   const [activeLang, setActiveLang] = useState(languages[0]?.code || 'it');
   const [isSaving, setIsSaving] = useState(false);
@@ -60,7 +60,7 @@ export function DocumentPickerModal({
     upload: upload || (async () => { throw new Error('Upload not configured'); }),
     config: uploadConfig || DEFAULT_UPLOAD_CONFIG,
     onUploadComplete: (newItem) => {
-      setItems((prev) => [newItem as DocumentItem, ...prev]);
+      setItems((prev) => [newItem as MediaDocumentItem, ...prev]);
     },
   });
 
@@ -117,7 +117,7 @@ export function DocumentPickerModal({
     loadItems(search, nextPage, true);
   };
 
-  const handleDocumentClick = (item: DocumentItem) => {
+  const handleDocumentClick = (item: MediaDocumentItem) => {
     if (selectMode) {
       setSelectedForDelete((prev) => {
         const newSet = new Set(prev);
@@ -142,7 +142,7 @@ export function DocumentPickerModal({
     onSelect(selectedItem);
   };
 
-  const handleEditTitle = (item: DocumentItem) => {
+  const handleEditTitle = (item: MediaDocumentItem) => {
     setEditingItem(item);
     setTitleValues(item.title || {});
     setActiveLang(languages[0]?.code || 'it');

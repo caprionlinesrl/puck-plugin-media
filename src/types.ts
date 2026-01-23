@@ -32,7 +32,7 @@ export type LocalizedString = Record<string, string | undefined>;
 /**
  * Image item - used both for API responses and stored values in Puck JSON
  */
-export interface ImageItem {
+export interface MediaImageItem {
   /** Unique identifier */
   id: string;
   /** Full URL to the image file */
@@ -60,7 +60,7 @@ export interface ImageItem {
 /**
  * Document item - used both for API responses and stored values in Puck JSON
  */
-export interface DocumentItem {
+export interface MediaDocumentItem {
   /** Unique identifier */
   id: string;
   /** Full URL to the document file */
@@ -86,15 +86,15 @@ export interface DocumentItem {
 /**
  * Gallery item - used both for API responses and stored values in Puck JSON
  */
-export interface GalleryItem {
+export interface MediaGalleryItem {
   /** Unique identifier */
   id: string;
   /** Gallery name */
   name: string;
   /** Cover image for preview */
-  coverImage?: ImageItem;
+  coverImage?: MediaImageItem;
   /** Images in the gallery */
-  images: ImageItem[];
+  images: MediaImageItem[];
   /** Number of images in the gallery (optional, can be calculated from images.length) */
   imageCount?: number;
   /** Creation date (useful for cache invalidation) */
@@ -197,7 +197,7 @@ export interface UploadingFile {
   /** Error message if status is 'error' */
   error?: string;
   /** Resulting item if status is 'completed' */
-  result?: ImageItem | DocumentItem;
+  result?: MediaImageItem | MediaDocumentItem;
   /** Preview URL for the file (blob URL) */
   previewUrl?: string;
 }
@@ -209,13 +209,13 @@ export interface UploadingFile {
 /**
  * Image-related callbacks
  */
-export interface ImageOptions {
+export interface MediaImageOptions {
   /** Function to fetch image list from your API */
-  fetchList: FetchListFn<ImageItem>;
+  fetchList: FetchListFn<MediaImageItem>;
   /** Function to upload images (optional) */
-  upload?: UploadFn<ImageItem>;
+  upload?: UploadFn<MediaImageItem>;
   /** Function to update image metadata (alt text) */
-  update?: (id: string, data: { alt?: LocalizedString }) => Promise<ImageItem>;
+  update?: (id: string, data: { alt?: LocalizedString }) => Promise<MediaImageItem>;
   /** Function to delete an image (optional) */
   delete?: (id: string) => Promise<void>;
   /** Configuration for file uploads */
@@ -225,13 +225,13 @@ export interface ImageOptions {
 /**
  * Gallery-related callbacks
  */
-export interface GalleryOptions {
+export interface MediaGalleryOptions {
   /** Function to fetch gallery list from your API (required) */
-  fetchList: FetchListFn<GalleryItem>;
+  fetchList: FetchListFn<MediaGalleryItem>;
   /** Function to fetch a single gallery by ID */
-  fetch: (id: string) => Promise<GalleryItem>;
+  fetch: (id: string) => Promise<MediaGalleryItem>;
   /** Function to create a new gallery */
-  create: (name: string) => Promise<GalleryItem>;
+  create: (name: string) => Promise<MediaGalleryItem>;
   /** Function to delete a gallery */
   delete: (id: string) => Promise<void>;
   /** Function to upload images to a gallery */
@@ -239,7 +239,7 @@ export interface GalleryOptions {
     galleryId: string,
     files: File | File[],
     callbacks: UploadCallbacks
-  ) => Promise<ImageItem | ImageItem[]>;
+  ) => Promise<MediaImageItem | MediaImageItem[]>;
   /** Function to remove an image from a gallery */
   removeImage: (galleryId: string, imageId: string) => Promise<void>;
   /** Function to update image metadata within a gallery (optional - hides alt editing if not provided) */
@@ -247,19 +247,19 @@ export interface GalleryOptions {
     galleryId: string,
     imageId: string,
     data: { alt?: LocalizedString }
-  ) => Promise<ImageItem>;
+  ) => Promise<MediaImageItem>;
 }
 
 /**
  * Document-related callbacks
  */
-export interface DocumentOptions {
+export interface MediaDocumentOptions {
   /** Function to fetch document list from your API */
-  fetchList: FetchListFn<DocumentItem>;
+  fetchList: FetchListFn<MediaDocumentItem>;
   /** Function to upload documents (optional - hides upload area if not provided) */
-  upload?: UploadFn<DocumentItem>;
+  upload?: UploadFn<MediaDocumentItem>;
   /** Function to update document metadata (title) (optional - hides edit icon if not provided) */
-  update?: (id: string, data: { title?: LocalizedString }) => Promise<DocumentItem>;
+  update?: (id: string, data: { title?: LocalizedString }) => Promise<MediaDocumentItem>;
   /** Function to delete a document (optional - hides manage button if not provided) */
   delete?: (id: string) => Promise<void>;
   /** Configuration for file uploads */
@@ -279,17 +279,17 @@ export interface MediaPluginOptions {
   /**
    * Image-related configuration (required)
    */
-  image: ImageOptions;
+  mediaImage: MediaImageOptions;
 
   /**
    * Gallery-related configuration (optional)
    */
-  gallery?: GalleryOptions;
+  mediaGallery?: MediaGalleryOptions;
 
   /**
    * Document-related configuration (optional)
    */
-  document?: DocumentOptions;
+  mediaDocument?: MediaDocumentOptions;
 }
 
 // =============================================================================
@@ -297,117 +297,117 @@ export interface MediaPluginOptions {
 // =============================================================================
 
 /**
- * Internal props passed to ImageField component
+ * Internal props passed to MediaImageField component
  */
-export interface ImageFieldProps {
+export interface MediaImageFieldProps {
   name: string;
-  value: ImageItem | null;
-  onChange: (value: ImageItem | null) => void;
+  value: MediaImageItem | null;
+  onChange: (value: MediaImageItem | null) => void;
   field: {
     label?: string;
     [key: string]: unknown;
   };
   languages: Language[];
-  imageOptions: ImageOptions;
+  imageOptions: MediaImageOptions;
 }
 
 /**
- * Internal props passed to GalleryField component
+ * Internal props passed to MediaGalleryField component
  */
-export interface GalleryFieldProps {
+export interface MediaGalleryFieldProps {
   name: string;
-  value: GalleryItem | null;
-  onChange: (value: GalleryItem | null) => void;
+  value: MediaGalleryItem | null;
+  onChange: (value: MediaGalleryItem | null) => void;
   field: {
     label?: string;
     [key: string]: unknown;
   };
   languages: Language[];
-  galleryOptions: GalleryOptions;
+  galleryOptions: MediaGalleryOptions;
 }
 
 /**
- * Internal props passed to DocumentField component
+ * Internal props passed to MediaDocumentField component
  */
-export interface DocumentFieldProps {
+export interface MediaDocumentFieldProps {
   name: string;
-  value: DocumentItem | null;
-  onChange: (value: DocumentItem | null) => void;
+  value: MediaDocumentItem | null;
+  onChange: (value: MediaDocumentItem | null) => void;
   field: {
     label?: string;
     [key: string]: unknown;
   };
   languages: Language[];
-  documentOptions: DocumentOptions;
+  documentOptions: MediaDocumentOptions;
 }
 
 /**
- * Props for ImagePickerModal component
+ * Props for MediaImagePickerModal component
  */
-export interface ImagePickerModalProps {
+export interface MediaImagePickerModalProps {
   languages: Language[];
-  imageOptions: ImageOptions;
+  imageOptions: MediaImageOptions;
   title?: string;
-  selectedImage?: ImageItem | null;
-  onSelect?: (item: ImageItem) => void;
+  selectedImage?: MediaImageItem | null;
+  onSelect?: (item: MediaImageItem) => void;
   onClose: () => void;
   /** When false, hides the "Select Image" button. Useful for media library mode. Default: true */
   selectable?: boolean;
 }
 
 /**
- * Props for GalleryPickerModal component
+ * Props for MediaGalleryPickerModal component
  */
-export interface GalleryPickerModalProps {
+export interface MediaGalleryPickerModalProps {
   languages: Language[];
-  galleryOptions: GalleryOptions;
+  galleryOptions: MediaGalleryOptions;
   title?: string;
-  selectedGallery?: GalleryItem | null;
-  onSelect?: (gallery: GalleryItem) => void;
+  selectedGallery?: MediaGalleryItem | null;
+  onSelect?: (gallery: MediaGalleryItem) => void;
   onClose: () => void;
   /** When false, hides the "Select Gallery" button. Useful for media library mode. Default: true */
   selectable?: boolean;
 }
 
 /**
- * Props for DocumentPickerModal component
+ * Props for MediaDocumentPickerModal component
  */
-export interface DocumentPickerModalProps {
+export interface MediaDocumentPickerModalProps {
   languages: Language[];
-  documentOptions: DocumentOptions;
+  documentOptions: MediaDocumentOptions;
   title?: string;
-  selectedDocument?: DocumentItem | null;
-  onSelect?: (item: DocumentItem) => void;
+  selectedDocument?: MediaDocumentItem | null;
+  onSelect?: (item: MediaDocumentItem) => void;
   onClose: () => void;
   /** When false, hides the "Select Document" button. Useful for media library mode. Default: true */
   selectable?: boolean;
 }
 
 /**
- * Props for ImageGrid component
+ * Props for MediaImageGrid component
  */
-export interface ImageGridProps {
-  items: ImageItem[];
-  onSelect: (item: ImageItem) => void;
+export interface MediaImageGridProps {
+  items: MediaImageItem[];
+  onSelect: (item: MediaImageItem) => void;
   selectedId?: string;
   loading?: boolean;
   /** Callback when user clicks edit icon */
-  onEditAlt?: (item: ImageItem) => void;
+  onEditAlt?: (item: MediaImageItem) => void;
   /** Whether manage mode is active (for bulk delete) */
   manageMode?: boolean;
   /** Set of selected item IDs for bulk operations */
   selectedIds?: Set<string>;
   /** Callback when user toggles selection in manage mode */
-  onToggleSelect?: (item: ImageItem) => void;
+  onToggleSelect?: (item: MediaImageItem) => void;
 }
 
 /**
  * Props for GalleryList component
  */
 export interface GalleryListProps {
-  items: GalleryItem[];
-  onSelect: (item: GalleryItem) => void;
-  onDelete?: (item: GalleryItem) => void;
+  items: MediaGalleryItem[];
+  onSelect: (item: MediaGalleryItem) => void;
+  onDelete?: (item: MediaGalleryItem) => void;
   selectedId?: string;
   loading?: boolean;
 }
@@ -416,8 +416,8 @@ export interface GalleryListProps {
  * Props for DocumentList component
  */
 export interface DocumentListProps {
-  items: DocumentItem[];
-  onSelect: (item: DocumentItem) => void;
+  items: MediaDocumentItem[];
+  onSelect: (item: MediaDocumentItem) => void;
   selectedId?: string;
   loading?: boolean;
 }

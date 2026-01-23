@@ -1,8 +1,8 @@
 import { Pencil, Check } from 'lucide-react';
-import type { ImageGridProps, ImageItem } from '../../types';
+import type { MediaImageGridProps, MediaImageItem } from '../../types';
 import styles from './ImageGrid.module.css';
 
-export function ImageGrid({
+export function MediaImageGrid({
   items,
   onSelect,
   selectedId,
@@ -10,7 +10,7 @@ export function ImageGrid({
   manageMode = false,
   selectedIds,
   onToggleSelect,
-}: ImageGridProps) {
+}: MediaImageGridProps) {
   const formatFileSize = (bytes?: number): string => {
     if (!bytes) return '';
     if (bytes < 1024) return `${bytes} B`;
@@ -18,7 +18,7 @@ export function ImageGrid({
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
-  const handleItemClick = (item: ImageItem) => {
+  const handleItemClick = (item: MediaImageItem) => {
     if (manageMode && onToggleSelect) {
       onToggleSelect(item);
     } else {
@@ -26,12 +26,12 @@ export function ImageGrid({
     }
   };
 
-  const handleEditClick = (e: React.MouseEvent, item: ImageItem) => {
+  const handleEditClick = (e: React.MouseEvent, item: MediaImageItem) => {
     e.stopPropagation();
     onEditAlt?.(item);
   };
 
-  const isSelected = (item: ImageItem): boolean => {
+  const isSelected = (item: MediaImageItem): boolean => {
     if (manageMode) {
       return selectedIds?.has(item.id) ?? false;
     }

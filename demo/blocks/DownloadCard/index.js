@@ -4,7 +4,7 @@ export const DownloadCardBlock = {
   label: 'Download Card',
   fields: {
     document: {
-      type: 'document',
+      type: 'mediaDocument',
       label: 'Document',
     },
     title: {

@@ -5,11 +5,11 @@ import { SearchBar } from '../SearchBar';
 import { LoadMoreButton } from '../LoadMoreButton';
 import { ConfirmDialog } from '../ConfirmDialog';
 import { SelectionToolbar } from '../SelectionToolbar';
-import { ImageGrid } from '../ImageGrid/ImageGrid';
+import { MediaImageGrid } from '../MediaImageGrid/MediaImageGrid';
 import { UploadDropzone } from '../UploadDropzone/UploadDropzone';
 import { UploadQueue } from '../UploadQueue/UploadQueue';
 import { useUpload } from '../../hooks/useUpload';
-import type { GalleryPickerModalProps, GalleryItem, ImageItem, LocalizedString } from '../../types';
+import type { MediaGalleryPickerModalProps, MediaGalleryItem, MediaImageItem, LocalizedString } from '../../types';
 import styles from './GalleryPickerModal.module.css';
 
 type ViewMode = 'list' | 'detail' | 'editImage';
@@ -22,7 +22,7 @@ const DEFAULT_UPLOAD_CONFIG = {
 
 const PAGE_SIZE = 20;
 
-export function GalleryPickerModal({
+export function MediaGalleryPickerModal({
   languages,
   galleryOptions,
   title = 'Select Gallery',
@@ -30,14 +30,14 @@ export function GalleryPickerModal({
   onSelect,
   onClose,
   selectable = true,
-}: GalleryPickerModalProps) {
+}: MediaGalleryPickerModalProps) {
   void _initialSelectedGallery;
   const { fetchList, fetch, create, delete: deleteGallery, upload, removeImage, updateImage } = galleryOptions;
 
   const [viewMode, setViewMode] = useState<ViewMode>('list');
-  const [editingImage, setEditingImage] = useState<ImageItem | null>(null);
-  const [galleries, setGalleries] = useState<GalleryItem[]>([]);
-  const [selectedGalleryItem, setSelectedGalleryItem] = useState<GalleryItem | null>(null);
+  const [editingImage, setEditingImage] = useState<MediaImageItem | null>(null);
+  const [galleries, setGalleries] = useState<MediaGalleryItem[]>([]);
+  const [selectedGalleryItem, setSelectedGalleryItem] = useState<MediaGalleryItem | null>(null);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -77,7 +77,7 @@ export function GalleryPickerModal({
           if (!prev) return prev;
           return {
             ...prev,
-            images: [newItem as ImageItem, ...prev.images],
+            images: [newItem as MediaImageItem, ...prev.images],
             imageCount: (prev.imageCount || 0) + 1,
           };
         });
@@ -152,7 +152,7 @@ export function GalleryPickerModal({
     loadGalleries(search, nextPage, true);
   };
 
-  const handleGalleryClick = (gallery: GalleryItem) => {
+  const handleGalleryClick = (gallery: MediaGalleryItem) => {
     if (gallerySelectMode) {
       setSelectedGalleryIds((prev) => {
         const newSet = new Set(prev);
@@ -202,7 +202,7 @@ export function GalleryPickerModal({
     }
   };
 
-  const handleToggleImageSelect = (image: ImageItem) => {
+  const handleToggleImageSelect = (image: MediaImageItem) => {
     setSelectedImageIds((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(image.id)) {
@@ -248,7 +248,7 @@ export function GalleryPickerModal({
     }
   };
 
-  const handleEditAlt = (image: ImageItem) => {
+  const handleEditAlt = (image: MediaImageItem) => {
     setEditingImage(image);
     setAltValues(image.alt || {});
     setActiveLang(languages[0]?.code || 'it');
@@ -517,7 +517,7 @@ export function GalleryPickerModal({
         empty={!loading && selectedGalleryItem.images.length === 0}
         emptyMessage="No images in this gallery. Upload some images above."
       >
-        <ImageGrid
+        <MediaImageGrid
           items={selectedGalleryItem.images}
           onSelect={() => {}}
           onEditAlt={updateImage ? handleEditAlt : undefined}

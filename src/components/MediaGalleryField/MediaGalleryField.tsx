@@ -2,20 +2,20 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { FieldLabel } from '@puckeditor/core';
 import { Images, X } from 'lucide-react';
-import { GalleryPickerModal } from '../GalleryPickerModal/GalleryPickerModal';
-import type { GalleryFieldProps, GalleryItem } from '../../types';
+import { MediaGalleryPickerModal } from '../MediaGalleryPickerModal/MediaGalleryPickerModal';
+import type { MediaGalleryFieldProps, MediaGalleryItem } from '../../types';
 import styles from './GalleryField.module.css';
 
-export function GalleryField({
+export function MediaGalleryField({
   value,
   onChange,
   field,
   languages,
   galleryOptions,
-}: GalleryFieldProps) {
+}: MediaGalleryFieldProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleSelect = (gallery: GalleryItem) => {
+  const handleSelect = (gallery: MediaGalleryItem) => {
     onChange(gallery);
     setIsModalOpen(false);
   };
@@ -90,7 +90,7 @@ export function GalleryField({
       </div>
 
       {isModalOpen && createPortal(
-        <GalleryPickerModal
+        <MediaGalleryPickerModal
           languages={languages}
           galleryOptions={galleryOptions}
           title="Select Gallery"

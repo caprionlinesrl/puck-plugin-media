@@ -2,20 +2,20 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { FieldLabel } from '@puckeditor/core';
 import { ImagePlus, X } from 'lucide-react';
-import { ImagePickerModal } from '../ImagePickerModal/ImagePickerModal';
-import type { ImageFieldProps, ImageItem } from '../../types';
+import { MediaImagePickerModal } from '../MediaImagePickerModal/MediaImagePickerModal';
+import type { MediaImageFieldProps, MediaImageItem } from '../../types';
 import styles from './ImageField.module.css';
 
-export function ImageField({
+export function MediaImageField({
   value,
   onChange,
   field,
   languages,
   imageOptions,
-}: ImageFieldProps) {
+}: MediaImageFieldProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleSelect = (item: ImageItem) => {
+  const handleSelect = (item: MediaImageItem) => {
     onChange(item);
     setIsModalOpen(false);
   };
@@ -80,7 +80,7 @@ export function ImageField({
       </div>
 
       {isModalOpen && createPortal(
-        <ImagePickerModal
+        <MediaImagePickerModal
           languages={languages}
           imageOptions={imageOptions}
           title="Select Image"

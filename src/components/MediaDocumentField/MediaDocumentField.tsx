@@ -2,21 +2,21 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { FieldLabel } from '@puckeditor/core';
 import { FileText, File, X } from 'lucide-react';
-import { DocumentPickerModal } from '../DocumentPickerModal/DocumentPickerModal';
+import { MediaDocumentPickerModal } from '../MediaDocumentPickerModal/MediaDocumentPickerModal';
 import { formatFileSize } from '../../hooks/useUpload';
-import type { DocumentFieldProps, DocumentItem } from '../../types';
+import type { MediaDocumentFieldProps, MediaDocumentItem } from '../../types';
 import styles from './DocumentField.module.css';
 
-export function DocumentField({
+export function MediaDocumentField({
   value,
   onChange,
   field,
   languages,
   documentOptions,
-}: DocumentFieldProps) {
+}: MediaDocumentFieldProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleSelect = (item: DocumentItem) => {
+  const handleSelect = (item: MediaDocumentItem) => {
     onChange(item);
     setIsModalOpen(false);
   };
@@ -93,7 +93,7 @@ export function DocumentField({
       </div>
 
       {isModalOpen && createPortal(
-        <DocumentPickerModal
+        <MediaDocumentPickerModal
           languages={languages}
           documentOptions={documentOptions}
           title="Select Document"

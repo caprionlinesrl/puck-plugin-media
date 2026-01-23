@@ -5,11 +5,11 @@ import { SearchBar } from '../SearchBar';
 import { LoadMoreButton } from '../LoadMoreButton';
 import { ConfirmDialog } from '../ConfirmDialog';
 import { SelectionToolbar } from '../SelectionToolbar';
-import { ImageGrid } from '../ImageGrid/ImageGrid';
+import { MediaImageGrid } from '../MediaImageGrid/MediaImageGrid';
 import { UploadDropzone } from '../UploadDropzone/UploadDropzone';
 import { UploadQueue } from '../UploadQueue/UploadQueue';
 import { useUpload } from '../../hooks/useUpload';
-import type { ImagePickerModalProps, ImageItem, LocalizedString } from '../../types';
+import type { MediaImagePickerModalProps, MediaImageItem, LocalizedString } from '../../types';
 import styles from './ImagePickerModal.module.css';
 
 const DEFAULT_UPLOAD_CONFIG = {
@@ -22,7 +22,7 @@ const PAGE_SIZE = 20;
 
 type ModalView = 'picker' | 'edit';
 
-export function ImagePickerModal({
+export function MediaImagePickerModal({
   languages,
   imageOptions,
   title = 'Select Image',
@@ -30,19 +30,19 @@ export function ImagePickerModal({
   onSelect,
   onClose,
   selectable = true,
-}: ImagePickerModalProps) {
+}: MediaImagePickerModalProps) {
   const { fetchList, upload, update, delete: deleteImage, uploadConfig } = imageOptions;
 
   const [view, setView] = useState<ModalView>('picker');
-  const [editingItem, setEditingItem] = useState<ImageItem | null>(null);
+  const [editingItem, setEditingItem] = useState<MediaImageItem | null>(null);
   const [selectMode, setSelectMode] = useState(false);
   const [selectedForDelete, setSelectedForDelete] = useState<Set<string>>(new Set());
-  const [items, setItems] = useState<ImageItem[]>([]);
+  const [items, setItems] = useState<MediaImageItem[]>([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<ImageItem | null>(null);
+  const [selectedItem, setSelectedItem] = useState<MediaImageItem | null>(null);
   const [altValues, setAltValues] = useState<LocalizedString>({});
   const [activeLang, setActiveLang] = useState(languages[0]?.code || 'it');
   const [isSaving, setIsSaving] = useState(false);
@@ -61,7 +61,7 @@ export function ImagePickerModal({
     upload: upload || (async () => { throw new Error('Upload not configured'); }),
     config: uploadConfig || DEFAULT_UPLOAD_CONFIG,
     onUploadComplete: (newItem) => {
-      setItems((prev) => [newItem as ImageItem, ...prev]);
+      setItems((prev) => [newItem as MediaImageItem, ...prev]);
     },
   });
 
@@ -118,7 +118,7 @@ export function ImagePickerModal({
     loadItems(search, nextPage, true);
   };
 
-  const handleImageClick = (item: ImageItem) => {
+  const handleImageClick = (item: MediaImageItem) => {
     if (selectedItem?.id === item.id) {
       setSelectedItem(null);
     } else {
@@ -131,7 +131,7 @@ export function ImagePickerModal({
     onSelect(selectedItem);
   };
 
-  const handleEditAlt = (item: ImageItem) => {
+  const handleEditAlt = (item: MediaImageItem) => {
     setEditingItem(item);
     setAltValues(item.alt || {});
     setActiveLang(languages[0]?.code || 'it');
@@ -169,7 +169,7 @@ export function ImagePickerModal({
     }
   };
 
-  const handleToggleSelect = (item: ImageItem) => {
+  const handleToggleSelect = (item: MediaImageItem) => {
     setSelectedForDelete((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(item.id)) {
@@ -433,7 +433,7 @@ export function ImagePickerModal({
         </div>
       )}
 
-      <ImageGrid
+      <MediaImageGrid
         items={items}
         onSelect={handleImageClick}
         selectedId={selectedItem?.id}

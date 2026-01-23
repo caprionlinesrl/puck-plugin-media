@@ -17,9 +17,9 @@
  */
 
 import type {
-  ImageItem,
-  GalleryItem,
-  DocumentItem,
+  MediaImageItem,
+  MediaGalleryItem,
+  MediaDocumentItem,
   FetchListParams,
   FetchListResult,
   UploadCallbacks,
@@ -30,7 +30,7 @@ import type {
 // IMAGE DATA
 // =============================================================================
 
-const mockImageItems: ImageItem[] = [
+const mockMediaImageItems: MediaImageItem[] = [
   {
     id: '1',
     url: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=800',
@@ -154,34 +154,34 @@ const mockImageItems: ImageItem[] = [
 ];
 
 // Store for dynamically uploaded images (in-memory for demo)
-let uploadedImages: ImageItem[] = [];
+let uploadedImages: MediaImageItem[] = [];
 
 // =============================================================================
 // GALLERY DATA
 // =============================================================================
 
-let mockGalleries: GalleryItem[] = [
+let mockGalleries: MediaGalleryItem[] = [
   {
     id: 'gallery-1',
     name: 'Landscapes',
-    coverImage: mockImageItems[0],
-    images: mockImageItems.slice(0, 8),
+    coverImage: mockMediaImageItems[0],
+    images: mockMediaImageItems.slice(0, 8),
     imageCount: 8,
     createdAt: '2024-01-15T10:00:00Z',
   },
   {
     id: 'gallery-2',
     name: 'Team',
-    coverImage: mockImageItems[10],
-    images: mockImageItems.slice(8, 12),
+    coverImage: mockMediaImageItems[10],
+    images: mockMediaImageItems.slice(8, 12),
     imageCount: 4,
     createdAt: '2024-01-20T14:30:00Z',
   },
   {
     id: 'gallery-3',
     name: 'Portfolio',
-    coverImage: mockImageItems[2],
-    images: mockImageItems.slice(2, 6),
+    coverImage: mockMediaImageItems[2],
+    images: mockMediaImageItems.slice(2, 6),
     imageCount: 4,
     createdAt: '2024-02-01T09:15:00Z',
   },
@@ -191,7 +191,7 @@ let mockGalleries: GalleryItem[] = [
 // DOCUMENT DATA
 // =============================================================================
 
-let mockDocumentItems: DocumentItem[] = [
+let mockMediaDocumentItems: MediaDocumentItem[] = [
   {
     id: 'doc-1',
     url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
@@ -235,7 +235,7 @@ let mockDocumentItems: DocumentItem[] = [
 ];
 
 // Store for dynamically uploaded documents (in-memory for demo)
-let uploadedDocuments: DocumentItem[] = [];
+let uploadedDocuments: MediaDocumentItem[] = [];
 
 // =============================================================================
 // HELPER FUNCTIONS
@@ -283,10 +283,10 @@ async function fetchImageList({
   query,
   page = 1,
   pageSize = 20,
-}: FetchListParams): Promise<FetchListResult<ImageItem>> {
+}: FetchListParams): Promise<FetchListResult<MediaImageItem>> {
   await delay(300);
 
-  const allItems = [...uploadedImages, ...mockImageItems];
+  const allItems = [...uploadedImages, ...mockMediaImageItems];
 
   let filteredItems = allItems;
   if (query) {
@@ -316,9 +316,9 @@ async function fetchImageList({
 async function uploadImages(
   files: File | File[],
   { onProgress }: UploadCallbacks
-): Promise<ImageItem | ImageItem[]> {
+): Promise<MediaImageItem | MediaImageItem[]> {
   const fileArray = Array.isArray(files) ? files : [files];
-  const results: ImageItem[] = [];
+  const results: MediaImageItem[] = [];
 
   for (let i = 0; i < fileArray.length; i++) {
     const file = fileArray[i];
@@ -339,7 +339,7 @@ async function uploadImages(
     }
 
     const url = URL.createObjectURL(file);
-    const newItem: ImageItem = {
+    const newItem: MediaImageItem = {
       id: generateId('uploaded-img'),
       url,
       thumbnailUrl: url,
@@ -364,7 +364,7 @@ async function uploadImages(
 async function updateImage(
   id: string,
   data: { alt?: Record<string, string | undefined> }
-): Promise<ImageItem> {
+): Promise<MediaImageItem> {
   await delay(200);
 
   // Find in uploaded images
@@ -376,7 +376,7 @@ async function updateImage(
   }
 
   // Find in mock items (we can't actually update these, but simulate it)
-  const mockItem = mockImageItems.find((img) => img.id === id);
+  const mockItem = mockMediaImageItems.find((img) => img.id === id);
   if (mockItem) {
     return { ...mockItem, ...data };
   }
@@ -398,9 +398,9 @@ async function deleteImage(id: string): Promise<void> {
   }
 
   // Check if it's a mock image (for demo, we'll just pretend it's deleted)
-  const mockIndex = mockImageItems.findIndex((img) => img.id === id);
+  const mockIndex = mockMediaImageItems.findIndex((img) => img.id === id);
   if (mockIndex !== -1) {
-    mockImageItems.splice(mockIndex, 1);
+    mockMediaImageItems.splice(mockIndex, 1);
     return;
   }
 
@@ -418,7 +418,7 @@ async function fetchGalleryList({
   query,
   page = 1,
   pageSize = 20,
-}: FetchListParams): Promise<FetchListResult<GalleryItem>> {
+}: FetchListParams): Promise<FetchListResult<MediaGalleryItem>> {
   await delay(300);
 
   let filteredItems = [...mockGalleries];
@@ -443,7 +443,7 @@ async function fetchGalleryList({
 /**
  * Fetch a single gallery by ID
  */
-async function fetchGallery(id: string): Promise<GalleryItem> {
+async function fetchGallery(id: string): Promise<MediaGalleryItem> {
   await delay(200);
 
   const gallery = mockGalleries.find((g) => g.id === id);
@@ -456,10 +456,10 @@ async function fetchGallery(id: string): Promise<GalleryItem> {
 /**
  * Create a new gallery
  */
-async function createGallery(name: string): Promise<GalleryItem> {
+async function createGallery(name: string): Promise<MediaGalleryItem> {
   await delay(300);
 
-  const newGallery: GalleryItem = {
+  const newGallery: MediaGalleryItem = {
     id: generateId('gallery'),
     name,
     coverImage: undefined,
@@ -487,9 +487,9 @@ async function uploadToGallery(
   galleryId: string,
   files: File | File[],
   { onProgress }: UploadCallbacks
-): Promise<ImageItem | ImageItem[]> {
+): Promise<MediaImageItem | MediaImageItem[]> {
   const fileArray = Array.isArray(files) ? files : [files];
-  const results: ImageItem[] = [];
+  const results: MediaImageItem[] = [];
 
   for (let i = 0; i < fileArray.length; i++) {
     const file = fileArray[i];
@@ -509,7 +509,7 @@ async function uploadToGallery(
     }
 
     const url = URL.createObjectURL(file);
-    const newItem: ImageItem = {
+    const newItem: MediaImageItem = {
       id: generateId('gallery-img'),
       url,
       thumbnailUrl: url,
@@ -568,10 +568,10 @@ async function updateGalleryImage(
   galleryId: string,
   imageId: string,
   data: { alt?: Record<string, string | undefined> }
-): Promise<ImageItem> {
+): Promise<MediaImageItem> {
   await delay(200);
 
-  let updatedImage: ImageItem | null = null;
+  let updatedImage: MediaImageItem | null = null;
 
   mockGalleries = mockGalleries.map((gallery) => {
     if (gallery.id === galleryId) {
@@ -607,10 +607,10 @@ async function fetchDocumentList({
   query,
   page = 1,
   pageSize = 20,
-}: FetchListParams): Promise<FetchListResult<DocumentItem>> {
+}: FetchListParams): Promise<FetchListResult<MediaDocumentItem>> {
   await delay(300);
 
-  const allItems = [...uploadedDocuments, ...mockDocumentItems];
+  const allItems = [...uploadedDocuments, ...mockMediaDocumentItems];
 
   let filteredItems = allItems;
   if (query) {
@@ -640,9 +640,9 @@ async function fetchDocumentList({
 async function uploadDocuments(
   files: File | File[],
   { onProgress }: UploadCallbacks
-): Promise<DocumentItem | DocumentItem[]> {
+): Promise<MediaDocumentItem | MediaDocumentItem[]> {
   const fileArray = Array.isArray(files) ? files : [files];
-  const results: DocumentItem[] = [];
+  const results: MediaDocumentItem[] = [];
 
   for (let i = 0; i < fileArray.length; i++) {
     const file = fileArray[i];
@@ -656,7 +656,7 @@ async function uploadDocuments(
     const url = URL.createObjectURL(file);
     const extension = file.name.split('.').pop() || '';
 
-    const newItem: DocumentItem = {
+    const newItem: MediaDocumentItem = {
       id: generateId('uploaded-doc'),
       url,
       filename: file.name,
@@ -680,7 +680,7 @@ async function uploadDocuments(
 async function updateDocument(
   id: string,
   data: { title?: Record<string, string | undefined> }
-): Promise<DocumentItem> {
+): Promise<MediaDocumentItem> {
   await delay(200);
 
   let item = uploadedDocuments.find((doc) => doc.id === id);
@@ -690,7 +690,7 @@ async function updateDocument(
     return item;
   }
 
-  const mockItem = mockDocumentItems.find((doc) => doc.id === id);
+  const mockItem = mockMediaDocumentItems.find((doc) => doc.id === id);
   if (mockItem) {
     return { ...mockItem, ...data };
   }
@@ -710,9 +710,9 @@ async function deleteDocument(id: string): Promise<void> {
     return;
   }
 
-  const mockIndex = mockDocumentItems.findIndex((doc) => doc.id === id);
+  const mockIndex = mockMediaDocumentItems.findIndex((doc) => doc.id === id);
   if (mockIndex !== -1) {
-    mockDocumentItems.splice(mockIndex, 1);
+    mockMediaDocumentItems.splice(mockIndex, 1);
     return;
   }
 
@@ -740,14 +740,14 @@ async function deleteDocument(id: string): Promise<void> {
  * });
  * ```
  */
-export const mockMediaConfig: Pick<MediaPluginOptions, 'image' | 'gallery' | 'document'> = {
-  image: {
+export const mockMediaConfig: Pick<MediaPluginOptions, 'mediaImage' | 'mediaGallery' | 'mediaDocument'> = {
+  mediaImage: {
     fetchList: fetchImageList,
     upload: uploadImages,
     update: updateImage,
     delete: deleteImage,
   },
-  gallery: {
+  mediaGallery: {
     fetchList: fetchGalleryList,
     fetch: fetchGallery,
     create: createGallery,
@@ -756,7 +756,7 @@ export const mockMediaConfig: Pick<MediaPluginOptions, 'image' | 'gallery' | 'do
     removeImage: removeFromGallery,
     updateImage: updateGalleryImage,
   },
-  document: {
+  mediaDocument: {
     fetchList: fetchDocumentList,
     upload: uploadDocuments,
     update: updateDocument,

@@ -3,12 +3,12 @@ export { createMediaPlugin } from './createMediaPlugin';
 export type {
   Language,
   LocalizedString,
-  ImageItem,
-  ImageOptions,
-  GalleryItem,
-  GalleryOptions,
-  DocumentItem,
-  DocumentOptions,
+  MediaImageItem,
+  MediaImageOptions,
+  MediaGalleryItem,
+  MediaGalleryOptions,
+  MediaDocumentItem,
+  MediaDocumentOptions,
   MediaPluginOptions,
   FetchListParams,
   FetchListResult,
@@ -22,13 +22,13 @@ export type {
 
 export { DEFAULT_LANGUAGES } from './types';
 
-export { ImageField } from './components/ImageField/ImageField';
-export { ImagePickerModal } from './components/ImagePickerModal/ImagePickerModal';
-export { ImageGrid } from './components/ImageGrid/ImageGrid';
-export { GalleryField } from './components/GalleryField/GalleryField';
-export { GalleryPickerModal } from './components/GalleryPickerModal/GalleryPickerModal';
-export { DocumentField } from './components/DocumentField/DocumentField';
-export { DocumentPickerModal } from './components/DocumentPickerModal/DocumentPickerModal';
+export { MediaImageField } from './components/MediaImageField/MediaImageField';
+export { MediaImagePickerModal } from './components/MediaImagePickerModal/MediaImagePickerModal';
+export { MediaImageGrid } from './components/MediaImageGrid/MediaImageGrid';
+export { MediaGalleryField } from './components/MediaGalleryField/MediaGalleryField';
+export { MediaGalleryPickerModal } from './components/MediaGalleryPickerModal/MediaGalleryPickerModal';
+export { MediaDocumentField } from './components/MediaDocumentField/MediaDocumentField';
+export { MediaDocumentPickerModal } from './components/MediaDocumentPickerModal/MediaDocumentPickerModal';
 export { MediaPanel } from './components/MediaPanel/MediaPanel';
 export { UploadDropzone } from './components/UploadDropzone/UploadDropzone';
 export { UploadQueue } from './components/UploadQueue/UploadQueue';

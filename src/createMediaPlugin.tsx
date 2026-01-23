@@ -1,14 +1,14 @@
 import { Image } from 'lucide-react';
-import { ImageField } from './components/ImageField/ImageField';
-import { GalleryField } from './components/GalleryField/GalleryField';
-import { DocumentField } from './components/DocumentField/DocumentField';
+import { MediaImageField } from './components/MediaImageField/MediaImageField';
+import { MediaGalleryField } from './components/MediaGalleryField/MediaGalleryField';
+import { MediaDocumentField } from './components/MediaDocumentField/MediaDocumentField';
 import { MediaPanel } from './components/MediaPanel/MediaPanel';
 import type {
   MediaPluginOptions,
   PuckPlugin,
-  ImageFieldProps,
-  GalleryFieldProps,
-  DocumentFieldProps,
+  MediaImageFieldProps,
+  MediaGalleryFieldProps,
+  MediaDocumentFieldProps,
 } from './types';
 
 /**
@@ -85,48 +85,48 @@ export function createMediaPlugin(options: MediaPluginOptions): PuckPlugin {
       { code: 'en', label: 'English' },
       { code: 'it', label: 'Italiano' },
     ],
-    image,
-    gallery,
-    document,
+    mediaImage,
+    mediaGallery,
+    mediaDocument,
   } = options;
 
   const fieldTypes: Record<string, (props: unknown) => React.ReactNode> = {
     // Image field type (always available)
-    image: (props: unknown) => {
-      const fieldProps = props as ImageFieldProps;
+    mediaImage: (props: unknown) => {
+      const fieldProps = props as MediaImageFieldProps;
       return (
-        <ImageField
+        <MediaImageField
           {...fieldProps}
           languages={languages}
-          imageOptions={image}
+          imageOptions={mediaImage}
         />
       );
     },
   };
 
-  // Gallery field type (only if gallery options provided)
-  if (gallery) {
-    fieldTypes.gallery = (props: unknown) => {
-      const fieldProps = props as GalleryFieldProps;
+  // Gallery field type (only if mediaGallery options provided)
+  if (mediaGallery) {
+    fieldTypes.mediaGallery = (props: unknown) => {
+      const fieldProps = props as MediaGalleryFieldProps;
       return (
-        <GalleryField
+        <MediaGalleryField
           {...fieldProps}
           languages={languages}
-          galleryOptions={gallery}
+          galleryOptions={mediaGallery}
         />
       );
     };
   }
 
-  // Document field type (only if document options provided)
-  if (document) {
-    fieldTypes.document = (props: unknown) => {
-      const fieldProps = props as DocumentFieldProps;
+  // Document field type (only if mediaDocument options provided)
+  if (mediaDocument) {
+    fieldTypes.mediaDocument = (props: unknown) => {
+      const fieldProps = props as MediaDocumentFieldProps;
       return (
-        <DocumentField
+        <MediaDocumentField
           {...fieldProps}
           languages={languages}
-          documentOptions={document}
+          documentOptions={mediaDocument}
         />
       );
     };
@@ -139,9 +139,9 @@ export function createMediaPlugin(options: MediaPluginOptions): PuckPlugin {
     render: () => (
       <MediaPanel
         languages={languages}
-        imageOptions={image}
-        galleryOptions={gallery}
-        documentOptions={document}
+        imageOptions={mediaImage}
+        galleryOptions={mediaGallery}
+        documentOptions={mediaDocument}
       />
     ),
     overrides: {

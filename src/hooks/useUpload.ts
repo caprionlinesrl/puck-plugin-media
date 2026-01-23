@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
-import type { UploadFn, UploadConfig, UploadingFile, ImageItem, DocumentItem } from '../types';
+import type { UploadFn, UploadConfig, UploadingFile, MediaImageItem, MediaDocumentItem } from '../types';
 
 const DEFAULT_CONFIG: Required<UploadConfig> = {
   accept: 'image/*',
@@ -59,7 +59,7 @@ const createPreviewUrl = (file: File): string | undefined => {
   return undefined;
 };
 
-export interface UseUploadOptions<T extends ImageItem | DocumentItem> {
+export interface UseUploadOptions<T extends MediaImageItem | MediaDocumentItem> {
   upload: UploadFn<T>;
   config?: UploadConfig;
   onUploadComplete?: (item: T) => void;
@@ -80,7 +80,7 @@ export interface UseUploadReturn {
   uploadConfig: Required<UploadConfig>;
 }
 
-export function useUpload<T extends ImageItem | DocumentItem>({
+export function useUpload<T extends MediaImageItem | MediaDocumentItem>({
   upload,
   config,
   onUploadComplete,

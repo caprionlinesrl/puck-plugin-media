@@ -4,7 +4,7 @@ export const PhotoGalleryBlock = {
   label: 'Photo Gallery',
   fields: {
     gallery: {
-      type: 'gallery',
+      type: 'mediaGallery',
       label: 'Gallery',
     },
     title: {

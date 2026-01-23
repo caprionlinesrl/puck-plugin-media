@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Image, Images, FileText } from 'lucide-react';
-import { ImagePickerModal } from '../ImagePickerModal/ImagePickerModal';
-import { GalleryPickerModal } from '../GalleryPickerModal/GalleryPickerModal';
-import { DocumentPickerModal } from '../DocumentPickerModal/DocumentPickerModal';
-import type { Language, ImageOptions, GalleryOptions, DocumentOptions } from '../../types';
+import { MediaImagePickerModal } from '../MediaImagePickerModal/MediaImagePickerModal';
+import { MediaGalleryPickerModal } from '../MediaGalleryPickerModal/MediaGalleryPickerModal';
+import { MediaDocumentPickerModal } from '../MediaDocumentPickerModal/MediaDocumentPickerModal';
+import type { Language, MediaImageOptions, MediaGalleryOptions, MediaDocumentOptions } from '../../types';
 import styles from './MediaPanel.module.css';
 
 export interface MediaPanelProps {
   languages: Language[];
-  imageOptions: ImageOptions;
-  galleryOptions?: GalleryOptions;
-  documentOptions?: DocumentOptions;
+  imageOptions: MediaImageOptions;
+  galleryOptions?: MediaGalleryOptions;
+  documentOptions?: MediaDocumentOptions;
 }
 
-type ModalType = 'image' | 'gallery' | 'document' | null;
+type ModalType = 'mediaImage' | 'mediaGallery' | 'mediaDocument' | null;
 
 export function MediaPanel({
   languages,
@@ -33,7 +33,7 @@ export function MediaPanel({
       <button
         type="button"
         className={styles.item}
-        onClick={() => setOpenModal('image')}
+        onClick={() => setOpenModal('mediaImage')}
       >
         <Image size={20} />
         <span>Images</span>
@@ -43,7 +43,7 @@ export function MediaPanel({
         <button
           type="button"
           className={styles.item}
-          onClick={() => setOpenModal('gallery')}
+          onClick={() => setOpenModal('mediaGallery')}
         >
           <Images size={20} />
           <span>Gallery</span>
@@ -54,15 +54,15 @@ export function MediaPanel({
         <button
           type="button"
           className={styles.item}
-          onClick={() => setOpenModal('document')}
+          onClick={() => setOpenModal('mediaDocument')}
         >
           <FileText size={20} />
           <span>Documents</span>
         </button>
       )}
 
-      {openModal === 'image' && createPortal(
-        <ImagePickerModal
+      {openModal === 'mediaImage' && createPortal(
+        <MediaImagePickerModal
           languages={languages}
           imageOptions={imageOptions}
           title="Media Library"
@@ -72,8 +72,8 @@ export function MediaPanel({
         document.body
       )}
 
-      {openModal === 'gallery' && galleryOptions && createPortal(
-        <GalleryPickerModal
+      {openModal === 'mediaGallery' && galleryOptions && createPortal(
+        <MediaGalleryPickerModal
           languages={languages}
           galleryOptions={galleryOptions}
           title="Gallery Library"
@@ -83,8 +83,8 @@ export function MediaPanel({
         document.body
       )}
 
-      {openModal === 'document' && documentOptions && createPortal(
-        <DocumentPickerModal
+      {openModal === 'mediaDocument' && documentOptions && createPortal(
+        <MediaDocumentPickerModal
           languages={languages}
           documentOptions={documentOptions}
           title="Document Library"

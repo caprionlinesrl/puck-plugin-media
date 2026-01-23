@@ -12,8 +12,6 @@ export type {
   MediaPluginOptions,
   FetchListParams,
   FetchListResult,
-  FetchListFn,
-  UploadFn,
   UploadConfig,
   UploadCallbacks,
 } from './types';
